@@ -11,49 +11,43 @@ class User
         }
     }
 
-    public static function create($nom, $prenom, $email, $motDePasse, $user_validate, $phone, $type_id) {
-        try {
-            self::initDatabase();
+    public static function createWithChild($nomUtilisateur, $prenomUtilisateur, $emailUtilisateur, $motDePasseUtilisateur, $user_validate, $phone, $type_id, $nomEnfant, $prenomEnfant, $photoEnfant, $dateNaissanceEnfant, $groupe)
+{
+    self::initDatabase();
     
-            $sql = "INSERT INTO `utilisateurs` (`nom`, `prenom`, `email`, `motDePasse`, `user_validate`, `phone`, `type_id`) 
-            VALUES (:nom, :prenom, :email, :motDePasse, :user_validate, :phone, :type_id)";
+    try {
+        // Commencer une transaction
+        self::$db->beginTransaction();
 
-    
-            $query = self::$db->prepare($sql);
-    
-            $query->bindValue(':nom', htmlspecialchars($nom), PDO::PARAM_STR);
-            $query->bindValue(':prenom', htmlspecialchars($prenom), PDO::PARAM_STR);
-            $query->bindValue(':email', htmlspecialchars($email), PDO::PARAM_STR);
-            $query->bindValue(':motDePasse', password_hash($motDePasse, PASSWORD_DEFAULT), PDO::PARAM_STR);
-            $query->bindValue(':user_validate', $user_validate, PDO::PARAM_INT);
-            $query->bindValue(':phone', $phone, PDO::PARAM_INT);
-            $query->bindValue(':type_id', $type_id, PDO::PARAM_INT);
-    
-            $query->execute();
-        } catch (PDOException $e) {
-            // Gérer l'erreur de manière appropriée
-            throw new Exception('Erreur lors de la création d\'utilisateur : ' . $e->getMessage());
-        }
+        // Insérer l'utilisateur principal et l'enfant dans une seule requête
+        $sql = "
+            INSERT INTO utilisateurs (nom, prenom, email, motDePasse, user_validate, phone, type_id, nomEnfant, prenomEnfant, photoEnfant, dateNaissanceEnfant, groupe)
+            VALUES (:nom, :prenom, :email, :motDePasse, :user_validate, :phone, :type_id, :nomEnfant, :prenomEnfant, :photoEnfant, :dateNaissanceEnfant, :groupe)
+        ";
+        $query = self::$db->prepare($sql);
+        $query->bindParam(':nom', $nomUtilisateur);
+        $query->bindParam(':prenom', $prenomUtilisateur);
+        $query->bindParam(':email', $emailUtilisateur);
+        $query->bindParam(':motDePasse', $motDePasseUtilisateur);
+        $query->bindParam(':user_validate', $user_validate);
+        $query->bindParam(':phone', $phone);
+        $query->bindParam(':type_id', $type_id);
+        $query->bindParam(':nomEnfant', $nomEnfant);
+        $query->bindParam(':prenomEnfant', $prenomEnfant);
+        $query->bindParam(':photoEnfant', $photoEnfant);
+        $query->bindParam(':dateNaissanceEnfant', $dateNaissanceEnfant);
+        $query->bindParam(':groupe', $groupe); // Ajout de la liaison pour le champ "groupe"
+        $query->execute();
+
+        // Valider la transaction
+        self::$db->commit();
+    } catch (PDOException $e) {
+        // En cas d'erreur, annuler la transaction
+        self::$db->rollBack();
+        throw new Exception("Erreur lors de la création de l'utilisateur avec l'enfant : " . $e->getMessage());
     }
-    
-    public static function createChild($nom, $prenom,$photo, $idParent ,$dateNaissance)
-    {
-        self::initDatabase();
-    
-        try {
-            $sql = "INSERT INTO enfants (nom, prenom,  photo, idParent, dateNaissance,) VALUES (:nom, :prenom,  :photo, :idParent,:dateNaissance)";
-            $query = self::$db->prepare($sql);
-            $query->bindParam(':nom', $nom);
-            $query->bindParam(':prenom', $prenom);
-            $query->bindParam(':photo', $photo);
-            $query->bindParam(':idParent', $idParent);
-            $query->bindParam(':dateNaissance', $dateNaissance);
-            $query->execute();
-        } catch (PDOException $e) {
-            throw new Exception("Erreur lors de la création de l'enfant : " . $e->getMessage());
-        }
-    }
-    
+}
+
 
     public static function hasChildren($idUtilisataeur)
 {
@@ -121,94 +115,76 @@ class User
     }
 
     public static function updateName($id_Utilisateur, $newName)
-    {
-        try {
-            self::initDatabase();
+{
+    try {
+        self::initDatabase();
 
-            $sql = "UPDATE utilisateurs SET nom = :newName WHERE id_Utilisateur = :id_Utilisateur";
-            $query = self::$db->prepare($sql);
+        $sql = "UPDATE utilisateurs SET nom = :newName WHERE idUtilisateur = :idUtilisateur";
+        $query = self::$db->prepare($sql);
 
-            $query->bindValue(':newName', $newName, PDO::PARAM_STR);
-            $query->bindValue(':user_id', $id_Utilisateur, PDO::PARAM_INT);
+        $query->bindValue(':newName', $newName, PDO::PARAM_STR);
+        $query->bindValue(':idUtilisateur', $id_Utilisateur, PDO::PARAM_INT);
 
-            $query->execute();
-        } catch (PDOException $e) {
-            throw new Exception('Erreur lors de la mise à jour du pseudo : ' . $e->getMessage());
-        }
+        $query->execute();
+    } catch (PDOException $e) {
+        throw new Exception('Erreur lors de la mise à jour du nom : ' . $e->getMessage());
     }
+}
 
+public static function updateEmail($id_Utilisateur, $newEmail)
+{
+    try {
+        self::initDatabase();
 
-    public static function updateFirstname($user_id, $newFirstname)
-    {
-        try {
-            self::initDatabase();
+        $sql = "UPDATE utilisateurs SET email = :newEmail WHERE idUtilisateur = :idUtilisateur";
+        $query = self::$db->prepare($sql);
 
-            $sql = "UPDATE utilisateurs SET prenom = :newFirstname WHERE user_id = :user_id";
-            $query = self::$db->prepare($sql);
+        $query->bindValue(':newEmail', $newEmail, PDO::PARAM_STR);
+        $query->bindValue(':idUtilisateur', $id_Utilisateur, PDO::PARAM_INT);
 
-            $query->bindValue(':newFirstname', $newFirstname, PDO::PARAM_STR);
-            $query->bindValue(':user_id', $user_id, PDO::PARAM_INT);
-
-            $query->execute();
-        } catch (PDOException $e) {
-            throw new Exception('Erreur lors de la mise à jour du prénom : ' . $e->getMessage());
-        }
+        $query->execute();
+    } catch (PDOException $e) {
+        throw new Exception('Erreur lors de la mise à jour de l\'email : ' . $e->getMessage());
     }
+}
 
+public static function updatePhone($id_Utilisateur, $newPhone)
+{
+    try {
+        self::initDatabase();
 
-    public static function updateDescription($user_id, $newDescription)
-    {
-        try {
-            self::initDatabase();
+        $sql = "UPDATE utilisateurs SET phone = :newPhone WHERE idUtilisateur = :idUtilisateur";
+        $query = self::$db->prepare($sql);
 
-            $sql = "UPDATE utilisateurs SET user_describ = :newDescription WHERE user_id = :user_id";
-            $query = self::$db->prepare($sql);
+        $query->bindValue(':newPhone', $newPhone, PDO::PARAM_INT);
+        $query->bindValue(':idUtilisateur', $id_Utilisateur, PDO::PARAM_INT);
 
-            $query->bindValue(':newDescription', $newDescription, PDO::PARAM_STR);
-            $query->bindValue(':user_id', $user_id, PDO::PARAM_INT);
-
-            $query->execute();
-        } catch (PDOException $e) {
-            throw new Exception('Erreur lors de la mise à jour de la description : ' . $e->getMessage());
-        }
+        $query->execute();
+    } catch (PDOException $e) {
+        throw new Exception('Erreur lors de la mise à jour du téléphone : ' . $e->getMessage());
     }
+}
 
-    public static function updateMail($user_id, $newMail)
-    {
-        try {
-            self::initDatabase();
 
-            $sql = "UPDATE utilisateurs SET prenom = :newMail WHERE user_id = :user_id";
-            $query = self::$db->prepare($sql);
 
-            $query->bindValue(':newMail', $newMail, PDO::PARAM_STR);
-            $query->bindValue(':user_id', $user_id, PDO::PARAM_INT);
+public static function updatephoto($user_id, $newphoto)
+{
+    try {
+        self::initDatabase();
 
-            $query->execute();
-        } catch (PDOException $e) {
-            throw new Exception('Erreur lors de la mise à jour du mail : ' . $e->getMessage());
-        }
+        $sql = "UPDATE utilisateurs SET photoEnfant = :new_photo WHERE idUtilisateurs = :idUtilisateurs";
+
+        $query = self::$db->prepare($sql);
+
+        $query->bindValue("new_photo", $newphoto, PDO::PARAM_STR);
+        $query->bindValue("idUtilisateurs", $user_id, PDO::PARAM_INT);
+
+        $query->execute();
+
+    } catch (PDOException $e) {
+        echo $e->getMessage();
     }
-
-
-    public static function updatephoto($user_id, $newphoto)
-    {
-        try {
-            self::initDatabase();
-
-            $sql = "UPDATE utilisateurs SET user_photo = :new_photo WHERE user_id = :user_id";
-
-            $query = self::$db->prepare($sql);
-
-            $query->bindValue("new_photo", $newphoto, PDO::PARAM_STR);
-            $query->bindValue("user_id", $user_id, PDO::PARAM_INT);
-
-            $query->execute();
-
-        } catch (PDOException $e) {
-            echo $e->getMessage();
-        }
-    }
+}
 
     
     public static function deleteuser($user_id)
@@ -223,9 +199,9 @@ class User
             $queryDeleteRides->execute();
 
             // Supprimer l'utilisateur
-            $sqlDeleteUser = "DELETE FROM utilisateurs WHERE user_id = :user_id";
+            $sqlDeleteUser = "DELETE FROM utilisateurs WHERE idUtilisateur = :idUtilisateur";
             $queryDeleteUser = self::$db->prepare($sqlDeleteUser);
-            $queryDeleteUser->bindValue(':user_id', $user_id, PDO::PARAM_INT);
+            $queryDeleteUser->bindValue(':idUtilisateur', $user_id, PDO::PARAM_INT);
             $queryDeleteUser->execute();
 
             // Vérifier les erreurs PDO après l'exécution de la requête
@@ -243,9 +219,9 @@ class User
         try {
             self::initDatabase();
 
-            $sql = "SELECT user_blocked FROM utilisateur WHERE user_id = :user_id";
+            $sql = "SELECT user_blocked FROM utilisateur WHERE idUtilisateur= :idUtilisateur";
             $query = self::$db->prepare($sql);
-            $query->bindValue(':user_id', $user_id, PDO::PARAM_INT);
+            $query->bindValue(':idUtilisateur', $user_id, PDO::PARAM_INT);
             $query->execute();
 
             $result = $query->fetch(PDO::FETCH_ASSOC);

@@ -54,14 +54,38 @@
                     title="Entrez un numéro de téléphone valide (chiffres seulement)"
                     class="mt-1 p-2 border border-gray-300 block w-full rounded-md" required>
             </div>
-
-            <label for="type_id" class="block text-sm font-medium text-gray-700">Role</label>
-            <select id="type_id" name="type_id" class="mt-1 p-2 border border-gray-300 block w-full rounded-md">
+            <select name="role_utilisateur" class="mt-1 p-2 border border-gray-300 block w-full rounded-md" >
                 <option value="">-- Veuillez sélectionner un rôle --</option>
-                <?php foreach ($types as $type): ?>
-                    <option value="<?php echo $type['type_id']; ?>"><?php echo $type['role']; ?></option>
+                <?php foreach ($roles as $role): ?>
+                    <option value="<?php echo $role['type_id']; ?>"><?php echo $role['role']; ?></option>
                 <?php endforeach; ?>
             </select>
+
+            <div>
+                <label for="nom_enfant" class="block text-sm font-medium text-gray-700">Nom de l'enfant</label>
+                <input type="text" id="nom_enfant" name="nom_enfant"
+                    class="mt-1 p-2 border border-gray-300 block w-full rounded-md" required>
+            </div>
+            <div>
+                <label for="prenom_enfant" class="block text-sm font-medium text-gray-700">Prénom de l'enfant</label>
+                <input type="text" id="prenom_enfant" name="prenom_enfant"
+                    class="mt-1 p-2 border border-gray-300 block w-full rounded-md" required>
+            </div>
+            <div>
+                <label for="date_naissance_enfant" class="block text-sm font-medium text-gray-700">Date de naissance de
+                    l'enfant</label>
+                <input type="date" id="date_naissance_enfant" name="date_naissance_enfant"
+                    class="mt-1 p-2 border border-gray-300 block w-full rounded-md" required>
+            </div>
+            <div>
+                <label for="prenom_enfant" class="block text-sm font-medium text-gray-700">A quels groupe appartiens votre enfant: ex:1/2/3</label>
+                <input type="text" id="groupe" name="groupe"
+                    class="mt-1 p-2 border border-gray-300 block w-full rounded-md" required>
+            </div>
+            <div>
+                <label for="photo_enfant" class="block text-sm font-medium text-gray-700">Photo de l'enfant :</label>
+                <input type="file" name="photo_enfant" id="photo_enfant" accept="image/*">
+            </div>
             <div class="flex justify-between items-center">
                 <button type="submit"
                     class="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 focus:outline-none focus:bg-blue-600">S'inscrire</button>

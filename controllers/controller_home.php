@@ -13,6 +13,7 @@ if (!isset($_SESSION['user'])) {
 $nom = $_SESSION['user']['nom'];
 $prenom = $_SESSION['user']['prenom'];
 
+
 function deconnexionUtilisateur() {
     // Détruit toutes les données de session
     session_destroy();

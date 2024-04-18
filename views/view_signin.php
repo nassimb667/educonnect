@@ -18,6 +18,7 @@
                 <label for="password" class="block text-gray-700 text-sm font-bold mb-2">Mot de passe</label>
                 <input type="password" id="password" name="password" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline" placeholder="Mot de passe">
             </div>
+            
             <div class="flex items-center justify-between">
                 <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Login</button>
                 <a href="../controllers/controller_signup.php" class="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800">Pas encore inscrie?</a>

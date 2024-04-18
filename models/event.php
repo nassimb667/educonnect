@@ -28,4 +28,35 @@ class Event
     }
 }
 
+public static function getCurrentEvents()
+{
+    self::initDatabase();
+
+    try {
+        $sql = "SELECT *, DATE_FORMAT(dateDebut, '%d/%m/%Y %H:%i:%s') AS dateDebut_fr, DATE_FORMAT(dateFin, '%d/%m/%Y %H:%i:%s') AS dateFin_fr FROM evenements WHERE dateDebut >= CURDATE() ORDER BY dateDebut ASC";
+        $query = self::$db->prepare($sql);
+        $query->execute();
+        return $query->fetchAll(PDO::FETCH_ASSOC);
+    } catch (PDOException $e) {
+        throw new Exception("Erreur lors de la récupération des événements actuels et à venir : " . $e->getMessage());
+    }
+}
+
+
+
+public static function getUpcomingEvents()
+{
+    self::initDatabase();
+
+    try {
+        $sql = "SELECT *, DATE_FORMAT(dateDebut, '%d/%m/%Y %H:%i:%s') AS dateDebut_fr, DATE_FORMAT(dateFin, '%d/%m/%Y %H:%i:%s') AS dateFin_fr FROM evenements WHERE dateDebut > CURDATE() ORDER BY dateDebut ASC";
+        $query = self::$db->prepare($sql);
+        $query->execute();
+        return $query->fetchAll(PDO::FETCH_ASSOC);
+    } catch (PDOException $e) {
+        throw new Exception("Erreur lors de la récupération des événements à venir : " . $e->getMessage());
+    }
+}
+
+
 }
