@@ -237,6 +237,38 @@ public static function updatephoto($user_id, $newphoto)
         }
     }
 
+    public static function createEduc($nomUtilisateur, $prenomUtilisateur, $emailUtilisateur, $motDePasseUtilisateur, $user_validate, $phone, $type_id)
+{
+    self::initDatabase();
+    
+    try {
+        // Commencer une transaction
+        self::$db->beginTransaction();
+
+        // Insérer l'utilisateur principal et l'enfant dans une seule requête
+        $sql = "
+            INSERT INTO utilisateurs (nom, prenom, email, motDePasse, user_validate, phone, type_id)
+            VALUES (:nom, :prenom, :email, :motDePasse, :user_validate, :phone, :type_id)
+        ";
+        $query = self::$db->prepare($sql);
+        $query->bindParam(':nom', $nomUtilisateur);
+        $query->bindParam(':prenom', $prenomUtilisateur);
+        $query->bindParam(':email', $emailUtilisateur);
+        $query->bindParam(':motDePasse', $motDePasseUtilisateur);
+        $query->bindParam(':user_validate', $user_validate);
+        $query->bindParam(':phone', $phone);
+        $query->bindParam(':type_id', $type_id);
+        $query->execute();
+
+        // Valider la transaction
+        self::$db->commit();
+    } catch (PDOException $e) {
+        // En cas d'erreur, annuler la transaction
+        self::$db->rollBack();
+        throw new Exception("Erreur lors de la création de l'utilisateur avec l'enfant : " . $e->getMessage());
+    }
+}
+
 
 
 }

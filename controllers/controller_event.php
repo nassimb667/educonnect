@@ -15,6 +15,7 @@ if (!isset($_SESSION['user'])) {
 // Récupérer tous les événements actuels et à venir
 $currentEvents = Event::getCurrentEvents();
 $upcomingEvents = Event::getUpcomingEvents();
+$pastEvents = Event::getPastEvents();
 
 // Inclure la vue pour afficher les événements
 include "../views/view_event.php";
