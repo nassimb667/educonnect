@@ -16,9 +16,19 @@ $nom = $user['nom'];
 $prenom = $user['prenom'];
 $email = $user['email'];
 
+// Appel des fonctions du modèle pour récupérer les données
 $totalUsers = Educ::countUsers();
 $ActiveUser = Educ::countUsersActif();
 $emploi_du_temps = Educ::EmploiDuTemps();
+$eventCount = Educ::countEvent();
+$eventCountP = Educ::countPreviousEvent();
+$eventCountA = Educ::countActiveEvent();
+$utilisateurs = Educ::afficherUtilisateursGroupe(); 
 
+function deconnexionUtilisateur() {
+    session_destroy();
+    header("Location: controller_educ_signin.php");
+    exit();
+}
 
 include "../views/view_educ_home.php";

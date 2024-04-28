@@ -73,6 +73,25 @@ public static function getPastEvents()
     }
 }
 
+public static function createArticle($titre, $description, $dateDebut, $dateFin, $image)
+{
+    try {
+        self::initDatabase();
+    
+        $sql = "INSERT INTO evenements (titre, description, dateDebut, dateFin, image) VALUES (:titre, :description, :dateDebut, :dateFin, :image)";
+        $query = self::$db->prepare($sql);
+        $query->bindParam(':titre', $titre);
+        $query->bindParam(':description', $description);
+        $query->bindParam(':dateDebut', $dateDebut);
+        $query->bindParam(':dateFin', $dateFin);
+        $query->bindParam(':image', $image);
+        $query->execute();
+        
+        return true; // Retourne true si l'insertion s'est bien déroulée
+    } catch (PDOException $e) {
+        throw new Exception("Erreur lors de la création de l'article : " . $e->getMessage());
+    }
+}
 
 
 }

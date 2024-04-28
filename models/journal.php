@@ -43,6 +43,24 @@ class Journal {
         }
     }
 
+    public static function addToJournal($date, $contenu, $image, $idUtilisateur) {
+        self::initDatabase();
+        try {
+            $pdo = self::$db;
+            $sql = "INSERT INTO journaux (date, contenu, image, idUtilisateur) VALUES (:date, :contenu, :image, :idUtilisateur)";
+            $query = $pdo->prepare($sql);
+            $query->execute([
+                ':date' => $date,
+                ':contenu' => $contenu,
+                ':image' => $image,
+                ':idUtilisateur' => $idUtilisateur
+            ]);
+            return true; // Retourne true si l'insertion s'est bien déroulée
+        } catch (PDOException $e) {
+            throw new Exception("Erreur lors de l'ajout au journal : " . $e->getMessage());
+        }
+    }
+
     public static function deleteJournalEntry($entryId) {
         self::initDatabase();
         try {

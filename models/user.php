@@ -269,6 +269,22 @@ public static function updatephoto($user_id, $newphoto)
     }
 }
 
+public static function getuser() {
+    try {
+        self::initDatabase(); // Initialisez la connexion à la base de données si ce n'est pas déjà fait
+        
+        $pdo = self::$db; // Utilisez la connexion PDO
+        $sql = "SELECT idUtilisateur AS id, prenom, nom FROM utilisateurs WHERE type_id = 2";
+        $query = $pdo->query($sql); // Exécutez la requête SQL
+        $users = $query->fetchAll(PDO::FETCH_ASSOC); // Récupérez les utilisateurs sous forme de tableau associatif
+        
+        return $users; // Renvoyez les utilisateurs
+    } catch (PDOException $e) {
+        throw new Exception("Erreur lors de la récupération des utilisateurs : " . $e->getMessage());
+    }
+}
+
+
 
 
 }

@@ -10,89 +10,87 @@
 
 <body class="bg-gray-100">
     <!-- Header -->
-    <header class="bg-gray-800 text-white py-4">
-        <div class="container mx-auto flex justify-between items-center px-4">
-            <h1 class="text-2xl font-bold">Dashboard Éducatif</h1>
-            <div class="flex items-center">
-                <span class="mr-4"><?= $prenom ?> <?= $nom ?></span>
-                <a href="#" class="text-white hover:underline">Déconnexion</a>
-            </div>
-        </div>
-    </header>
+    <?php include "header_educ.php"; ?>
 
-    <!-- Contenu et barre latérale -->
-    <div class="container mx-auto flex">
-        <!-- Sidebar (Menu burger sur les petits écrans) -->
-        <div id="sidebar" class="bg-gray-800 text-white h-screen w-64 fixed top-0 left-0 overflow-y-auto z-50 hidden md:block">
-            <div class="p-4">
-                <h2 class="text-2xl font-bold">Menu</h2>
-                <ul class="mt-4">
-                    <li class="mb-2">
-                        <a href="#" class="block py-2 px-4 rounded-lg hover:bg-gray-700" onclick="toggleSidebar()">Tableau de bord</a>
-                    </li>
-                    <li class="mb-2">
-                        <a href="#" class="block py-2 px-4 rounded-lg hover:bg-gray-700" onclick="toggleSidebar()">Gestion des élèves</a>
-                    </li>
-                    <li class="mb-2">
-                        <a href="#" class="block py-2 px-4 rounded-lg hover:bg-gray-700" onclick="toggleSidebar()">Gestion des cours</a>
-                    </li>
-                    <!-- Ajoutez d'autres liens de navigation ici -->
-                </ul>
-            </div>
-        </div>
+    <!-- Contenu -->
+    <div class="container mx-auto p-8">
+        <h1 class="text-3xl font-bold mb-8">Statistiques et Emploi du Temps</h1>
 
-        <!-- Menu burger -->
-        <div class="md:hidden">
-            <!-- Bouton du menu burger -->
-            <button id="menu-toggle" class="block text-gray-500 hover:text-white focus:outline-none focus:text-white">
-                <svg class="h-6 w-6 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                    <path v-if="open" fill-rule="evenodd" clip-rule="evenodd" d="M4 6h16v2H4V6zm16 5H4v2h16v-2zm0 5H4v2h16v-2z" />
-                    <path v-else fill-rule="evenodd" clip-rule="evenodd" d="M4 6h16v2H4V6zm0 5h16v2H4v-2zm0 5h16v2H4v-2z" />
-                </svg>
-            </button>
-            <!-- Contenu du menu burger -->
-            <div id="menu" class="fixed top-0 left-0 bg-gray-800 text-white w-64 h-full overflow-y-auto z-50 hidden">
-                <div class="p-4">
-                    <h2 class="text-2xl font-bold">Menu</h2>
-                    <ul class="mt-4">
-                        <li class="mb-2">
-                            <a href="#" class="block py-2 px-4 rounded-lg hover:bg-gray-700" onclick="toggleSidebar()">Tableau de bord</a>
-                        </li>
-                        <li class="mb-2">
-                            <a href="#" class="block py-2 px-4 rounded-lg hover:bg-gray-700" onclick="toggleSidebar()">Gestion des élèves</a>
-                        </li>
-                        <li class="mb-2">
-                            <a href="#" class="block py-2 px-4 rounded-lg hover:bg-gray-700" onclick="toggleSidebar()">Gestion des cours</a>
-                        </li>
-                        <!-- Ajoutez d'autres liens de navigation ici -->
-                    </ul>
+        <!-- Statistiques et Emploi du Temps -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <!-- Statistiques -->
+            <div class="bg-white shadow-md rounded-lg">
+                <div class="p-4 bg-gray-800 text-white rounded-t-lg">
+                    <h2 class="text-xl md:text-2xl font-semibold">Statistiques</h2>
                 </div>
-            </div>
-        </div>
-
-        <!-- Contenu -->
-        <div class="flex-1 ml-0 md:ml-64 p-8">
-            <h1 class="text-3xl font-bold mb-4">Tableau de bord - Version éducative</h1>
-
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <!-- Statistiques -->
-                <div class="bg-white shadow-md rounded-lg p-6">
-                    <h2 class="text-xl md:text-2xl font-semibold mb-4">Statistiques</h2>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <div class="bg-gray-200 rounded-lg p-4">
-                            <h3 class="text-lg font-semibold mb-2">Utilisateurs famille</h3>
-                            <p class="text-gray-600">Nombre total : <span class="font-bold"><?= $totalUsers ?></span></p>
-                        </div>
-                        <div class="bg-gray-200 rounded-lg p-4">
-                            <h3 class="text-lg font-semibold mb-2">Utilisateurs Actifs</h3>
-                            <p class="text-gray-600">Nombre total : <span class="font-bold"><?= $ActiveUser ?></span></p>
-                        </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 p-4">
+                    <div class="bg-gray-200 rounded-lg p-4">
+                        <h3 class="text-lg font-semibold mb-2">Utilisateurs famille</h3>
+                        <p class="text-gray-600">Nombre total : <span class="font-bold"><?= $totalUsers ?></span></p>
                     </div>
-                </div>
+                    <div class="bg-gray-200 rounded-lg p-4">
+                        <h3 class="text-lg font-semibold mb-2">Utilisateurs Actifs</h3>
+                        <p class="text-gray-600">Nombre total : <span class="font-bold"><?= $ActiveUser ?></span></p>
+                    </div>
+                    <div class="bg-gray-200 rounded-lg p-4">
+                        <h3 class="text-lg font-semibold mb-2">Evénements</h3>
+                        <p class="text-gray-600">Nombre total d'événements : <span
+                                class="font-bold"><?= $eventCount ?></span></p>
+                    </div>
+                    <div class="bg-gray-200 rounded-lg p-4">
+                        <h3 class="text-lg font-semibold mb-2">Evénements passés</h3>
+                        <p class="text-gray-600">Nombre d'événements passés : <span
+                                class="font-bold"><?= $eventCountP ?></span></p>
+                    </div>
+                    <div class="bg-gray-200 rounded-lg p-4">
+                        <h3 class="text-lg font-semibold mb-2">Evénements Actuels</h3>
+                        <p class="text-gray-600">Nombre d'événements en cours : <span
+                                class="font-bold"><?= $eventCountA ?></span></p>
+                    </div>
+                    <h1>Liste des groupes et utilisateurs</h1>
 
-                <!-- Emploi du Temps -->
-                <div class="bg-white shadow-md rounded-lg p-6">
-                    <h2 class="text-xl md:text-2xl font-semibold mb-4">Emploi du Temps</h2>
+                    <?php if ($utilisateurs): ?>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                            <?php foreach (range(1, 3) as $numGroupe): ?>
+                                <div class="bg-white shadow-md rounded-lg p-4">
+                                    <h3 class="text-lg font-semibold mb-2">Groupe <?= $numGroupe ?></h3>
+                                    <?php
+                                    $groupe = [];
+
+                                    // Parcours des utilisateurs pour ce groupe
+                                    foreach ($utilisateurs as $utilisateur) {
+                                        if ($utilisateur['groupe'] == $numGroupe) {
+                                            // Ajout du nom et prénom de l'utilisateur au tableau
+                                            $groupe[] = "<li>{$utilisateur['prenomEnfant']} {$utilisateur['nomEnfant']}</li>";
+                                        }
+                                    }
+
+                                    // Affichage des utilisateurs par groupe
+                                    if (!empty($groupe)) {
+                                        echo "<ul>" . implode("", $groupe) . "</ul>";
+                                    } else {
+                                        echo "<p class='text-gray-600'>Aucun utilisateur trouvé dans ce groupe.</p>";
+                                    }
+                                    ?>
+                                </div>
+                            <?php endforeach; ?>
+                        </div>
+                    <?php else: ?>
+                        <p class="text-gray-600">Aucun utilisateur trouvé.</p>
+                    <?php endif; ?>
+
+
+
+
+                </div>
+            </div>
+
+            <!-- Emploi du Temps -->
+            <div class="bg-white shadow-md rounded-lg">
+                <div class="p-4 bg-gray-800 text-white rounded-t-lg">
+                    <h2 class="text-xl md:text-2xl font-semibold">Emploi du Temps</h2>
+                </div>
+                <div class="p-4">
                     <?php foreach ($emploi_du_temps as $groupe => $activites): ?>
                         <div class="bg-gray-200 rounded-lg p-4 mb-4">
                             <h3 class="text-lg font-semibold mb-2">Groupe <?= $groupe ?></h3>
