@@ -6,20 +6,26 @@ require_once "../models/user.php";
 require_once "../models/database.php";
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
+    // Récupération des données du formulaire
     $email = isset($_POST["email"]) ? trim($_POST["email"]) : null;
     $password = isset($_POST["password"]) ? trim($_POST["password"]) : null;
 
+    // Vérification que les champs ne sont pas vides
     if (empty($email) || empty($password)) {
         echo "Veuillez remplir tous les champs du formulaire.";
     } else {
         try {
+            // Récupération des informations de l'utilisateur associé à l'email
             $user = user::getInfos($email);
             if ($user) {
+                // Vérification si le compte utilisateur est activé
                 if ($user['user_validate'] == 1) {
+                    // Vérification du mot de passe
                     if (isset($user['motDePasse']) && password_verify($password, $user['motDePasse'])) {
+                        // Authentification réussie, enregistrement des informations de l'utilisateur dans la session
                         $_SESSION['user'] = $user;
 
-                        // Rediriger vers une autre page (par exemple, la page d'accueil)
+                        // Redirection vers la page d'accueil
                         header("Location: ../controllers/controller_home.php");
                         exit();
                     } else {
@@ -37,5 +43,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     }
 }
 
+// Inclusion de la vue du formulaire de connexion
 include("../views/view_signin.php");
 

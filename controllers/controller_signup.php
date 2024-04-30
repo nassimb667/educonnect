@@ -62,13 +62,13 @@ if (empty($nomEnfant) || empty($prenomEnfant) || empty($dateNaissanceEnfant) || 
     $errors[] = "Tous les champs de l'enfant sont obligatoires.";
 }
 
-// Vérifier s'il n'y a pas d'erreurs avant d'effectuer l'inscription
+// Vérification d'erreurs avant d'effectuer l'inscription
 if (empty($errors)) {
     try {
         // Inscrire l'utilisateur et son enfant
         User::createWithChild($nomUtilisateur, $prenomUtilisateur, $emailUtilisateur, $hashedPassword, $user_validate, $phone, $type_id, $nomEnfant, $prenomEnfant, $photoEnfant, $dateNaissanceEnfant, $groupe); // Ajout de $groupe
 
-        // Rediriger vers une page de succès
+        // Redirection vers la page de succès
         header("Location: ../views/success.php");
         exit();
     } catch (Exception $e) {
@@ -79,5 +79,4 @@ if (empty($errors)) {
 
 $roles = Role::getRoles();
 
-// Inclure la vue du formulaire avec les éventuelles erreurs
 include "../views/view_signup.php";
