@@ -73,6 +73,28 @@ public static function getPastEvents()
     }
 }
 
+public static function getEventById($eventId) {
+
+    try {
+        self::initDatabase();
+
+        $sql = "SELECT * FROM evenements WHERE idEvenement = :eventId";
+        $query = self::$db->prepare($sql);
+        $query->bindParam(':eventId', $eventId);
+        $query->execute();
+
+        // Récupérer les résultats de la requête
+        $event = $query->fetch(PDO::FETCH_ASSOC);
+
+        // Retourner les détails de l'événement
+        return $event;
+    } catch (PDOException $e) {
+        // Gérer les erreurs de requête SQL
+        throw new Exception("Erreur lors de la récupération des détails de l'événement : " . $e->getMessage());
+    }
+}
+
+
 public static function createArticle($titre, $description, $dateDebut, $dateFin, $image)
 {
     try {

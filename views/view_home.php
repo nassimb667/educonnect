@@ -30,8 +30,8 @@
                     <img src="../assets/img/<?php echo $event['image']; ?>" alt="Image de l'événement"
                         class="w-full max-w-xs h-auto mt-2 rounded-md">
                     <!-- Lien "Lire plus" -->
-                    <a href="view_event.php?id=<?php echo $event['idEvenement']; ?>" class="text-blue-500 block mt-2">Lire
-                        plus</a>
+                    <a href="../controllers/controller_event2.php?id=<?php echo $event['idEvenement']; ?>" class="text-blue-500 block mt-2">Lire plus</a>
+
                 </div>
             <?php endforeach; ?>
         </div>
