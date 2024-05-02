@@ -172,19 +172,28 @@ public static function updatephoto($user_id, $newphoto)
     try {
         self::initDatabase();
 
+        $old_photo = self::getInfos($user_id);
+
+        // Supprimer l'ancienne photo si elle existe
+        if ($old_photo) {
+            $old_photo_path = "../assets/img/" . $old_photo;
+            if (file_exists($old_photo_path)) {
+                unlink($old_photo_path);
+            }
+        }
+
+        // Mettre à jour la base de données avec la nouvelle photo
         $sql = "UPDATE utilisateurs SET photoEnfant = :new_photo WHERE idUtilisateurs = :idUtilisateurs";
-
         $query = self::$db->prepare($sql);
-
         $query->bindValue("new_photo", $newphoto, PDO::PARAM_STR);
         $query->bindValue("idUtilisateurs", $user_id, PDO::PARAM_INT);
-
         $query->execute();
 
     } catch (PDOException $e) {
         echo $e->getMessage();
     }
 }
+
 
     
     public static function deleteuser($user_id)

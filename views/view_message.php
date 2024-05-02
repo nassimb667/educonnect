@@ -52,10 +52,6 @@
             // Récupérer le contenu du message
             const messageContent = messageInput.value;
 
-            // Envoyer le message au serveur (vous devrez implémenter cette partie côté serveur)
-            // Vous pouvez utiliser une requête AJAX pour cela
-
-            // Effacer le champ de saisie après l'envoi
             messageInput.value = '';
         });
     </script>

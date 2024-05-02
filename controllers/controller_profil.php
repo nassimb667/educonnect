@@ -26,23 +26,24 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             User::updateEmail($userId, $newEmail);
             User::updatePhone($userId, $newPhone);
 
- 
-            
-if (isset($_FILES['new_photo']) && $_FILES['new_photo']['error'] === 0) {
-                $targetDir = "../assets/img/"; 
+            // Vérifier s'il y a une nouvelle photo de l'enfant à télécharger
+            if (isset($_FILES['new_photo']) && $_FILES['new_photo']['error'] === 0) {
+                $targetDir = "../assets/img/";
                 $fileName = uniqid('photo_enfant_') . '_' . basename($_FILES["new_photo"]["name"]);
                 $targetFilePath = $targetDir . $fileName;
                 $fileType = pathinfo($targetFilePath, PATHINFO_EXTENSION);
-               
+
                 $allowTypes = array('jpg', 'png', 'jpeg', 'gif');
                 if (in_array($fileType, $allowTypes)) {
-                    
+                    // Déplacer le fichier téléchargé vers le répertoire de destination
                     if (move_uploaded_file($_FILES["new_photo"]["tmp_name"], $targetFilePath)) {
-                        
-                        User::updatePhoto($userId, $fileName);
-
-                        
-                        $_SESSION['user']['photoEnfant'] = $targetFilePath;
+                        // Mettre à jour la base de données avec le nouveau nom de fichier de la photo
+                        User::updatephoto($userId, $fileName);
+                        // Mettre à jour la session avec le nouveau chemin de la photo de l'enfant
+                        $_SESSION['user']['photoEnfant'] = $fileName;
+                        // Rediriger vers le profil après la mise à jour
+                        header("Location: controller_profil.php");
+                        exit();
                     } else {
                         echo "Erreur lors du téléchargement du fichier.";
                     }
@@ -50,11 +51,7 @@ if (isset($_FILES['new_photo']) && $_FILES['new_photo']['error'] === 0) {
                     echo "Seuls les fichiers JPG, JPEG, PNG et GIF sont autorisés.";
                 }
             }
-            
-            header("Location: controller_profil.php");
-            exit();
         } catch (Exception $e) {
-            
             echo "Erreur lors de la mise à jour des informations: " . $e->getMessage();
         }
     } else {
@@ -62,10 +59,8 @@ if (isset($_FILES['new_photo']) && $_FILES['new_photo']['error'] === 0) {
     }
 }
 
-
 $user = $_SESSION['user'];
 
 $dateNaissanceEnfant = date('d F Y', strtotime($user['dateNaissanceEnfant']));
-
 
 include "../views/view_profil.php";

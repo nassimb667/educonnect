@@ -13,7 +13,7 @@ require_once "../models/journal.php";
 
 // Récupération des informations de l'utilisateur depuis la session
 $user = $_SESSION['user'];
-$idUtilisateurSession = $user['id']; // Récupération de l'ID utilisateur de la session
+$idUtilisateurSession = $user['idUtilisateur']; // Récupération de l'ID utilisateur de la session
 $nom = $user['nom'];
 $prenom = $user['prenom'];
 $email = $user['email'];
@@ -33,7 +33,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submit'])) {
 
     // Gestion de l'image
     if ($imageError === 0) {
-        $imageDestination = '../images/' . $imageName;
+        $imageDestination = '../assets/img/journal/' . $imageName; // Modifier le chemin de destination
         move_uploaded_file($imageTmpName, $imageDestination);
     }
 
@@ -46,7 +46,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submit'])) {
         
         if ($success) {
             // Redirection vers une page de succès ou affichage d'un message de succès
-            header("Location: ../views/success_page.php");
+            header("Location: ../views/journal_success.php");
             exit();
         } else {
             // Gestion de l'échec de l'ajout de l'entrée au journal
@@ -70,4 +70,3 @@ try {
 
 // Inclure la vue pour afficher le formulaire et les entrées du journal
 include "../views/view_educ_journal.php";
-?>
