@@ -92,30 +92,30 @@ class Journal {
     public static function modifyJournalWithImage($journalId, $date, $contenu, $imageName) {
         try {
             self::initDatabase(); // Initialisez votre connexion à la base de données ici
-
+    
             // Requête SQL pour mettre à jour le journal avec une nouvelle image
-            $sql = "UPDATE journal SET date = :date, contenu = :contenu, image = :image WHERE id = :id";
-
+            $sql = "UPDATE journaux SET date = :date, contenu = :contenu, image = :image WHERE idJournal = :idJournal";
+    
             // Préparation de la requête
             $query = self::$db->prepare($sql);
-
+    
             // Liaison des valeurs avec les paramètres de la requête
             $query->bindValue(':date', $date, PDO::PARAM_STR);
             $query->bindValue(':contenu', $contenu, PDO::PARAM_STR);
             $query->bindValue(':image', $imageName, PDO::PARAM_STR);
-            $query->bindValue(':id', $journalId, PDO::PARAM_INT);
-
+            $query->bindValue(':idJournal', $journalId, PDO::PARAM_INT);
+    
             // Exécution de la requête
             $query->execute();
-
+    
             // Retourne true si la mise à jour a réussi
             return true;
         } catch (PDOException $e) {
             // Gestion des erreurs de base de données
-            echo "Erreur : " . $e->getMessage();
             return false;
         }
     }
+    
 
     // Méthode pour modifier un journal sans changer l'image
     public static function modifyJournal($journalId, $date, $contenu, $newImageName) {
@@ -123,7 +123,7 @@ class Journal {
             self::initDatabase(); 
     
             // Requête SQL pour mettre à jour le journal
-            $sql = "UPDATE journal SET date = :date, contenu = :contenu, image = :image WHERE id = :id";
+            $sql = "UPDATE journaux SET date = :date, contenu = :contenu, image = :image WHERE id = :id";
     
             // Préparation de la requête
             $query = self::$db->prepare($sql);
@@ -145,6 +145,7 @@ class Journal {
             return false;
         }
     }
+    
     
     public static function getJournalById($journalId) {
         self::initDatabase();

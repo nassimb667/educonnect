@@ -1,4 +1,7 @@
 <?php
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
 session_start();
 if (!isset($_SESSION['user'])) {
     header("Location: controller_login_educ.php");
@@ -18,12 +21,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submit'])) {
         $newImageSize = $_FILES['image']['size'];
         $newImageError = $_FILES['image']['error'];
         $newImageType = $_FILES['image']['type'];
-        // Gérez l'image comme requis
-        // Assurez-vous de mettre à jour le chemin de l'image dans la base de données
+
+        // Chemin de destination pour enregistrer l'image
+        $destination = "../assets/img/journal/" . $newImageName;
+
+        // Déplacez le fichier téléchargé vers le dossier de destination
+        if (move_uploaded_file($newImageTmpName, $destination)) {
+            echo "Le fichier a été téléchargé avec succès.";
+        } else {
+            echo "Une erreur s'est produite lors du téléchargement du fichier.";
+        }
     }
+    // Définir la date actuelle
+    $newDate = date('Y-m-d H:i:s'); // Date actuelle au format SQL DATETIME
     // Mettez à jour l'article dans la base de données
     try {
-        Journal::modifyJournal($journalId, $newContenu, $newDate, $newImageName); // Appelez la méthode pour mettre à jour l'article
+        Journal::modifyJournalWithImage($journalId, $newDate, $newContenu, $newImageName); 
         // Redirigez l'utilisateur vers la même page après la mise à jour
         header("Location: controller_educ_modify_journal.php");
         exit();
@@ -39,5 +52,4 @@ try {
     echo "Erreur : " . $e->getMessage();
     exit();
 }
-
 include "../views/view_modify_journal.php";

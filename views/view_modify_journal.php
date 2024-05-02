@@ -12,11 +12,6 @@
     <div class="container mx-auto p-8">
         <h1 class="text-3xl font-bold mb-8">Modifier Journal</h1>
 
-        <!-- Bouton pour ajouter un nouvel article au journal -->
-        <a href="../controllers/controller_add_journal.php"
-            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mb-4 inline-block">Ajouter un
-            article</a>
-
         <!-- Liste des articles du journal -->
         <ul>
             <?php foreach ($journals as $journal): ?>
@@ -31,7 +26,6 @@
                     <!-- Afficher l'image -->
                     <?php if (!empty($journal['image'])): ?>
                         <img src="../assets/img/journal/<?= $journal['image'] ?>" alt="Image du journal" class="mt-2 w-64">
-                        
                     <?php endif; ?>
                 </li>
             <?php endforeach; ?>
