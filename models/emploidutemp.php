@@ -35,5 +35,32 @@ class Timetable
             return null;
         }
     }
+
+
+    public static function ajouterActivite($heure_debut, $heure_fin, $nom_activite) {
+        self::initDatabase();
+        try {
+            $pdo = self::$db;
+            $sql = "INSERT INTO emploidutemp (heure_debut, heure_fin, matiere) VALUES (?, ?, ?)";
+            $query = $pdo->prepare($sql);
+            $query->execute([$heure_debut, $heure_fin, $nom_activite]);
+            return true;
+        } catch (PDOException $e) {
+            throw new Exception("Erreur lors de l'ajout d'une activité à l'emploi du temps : " . $e->getMessage());
+        }
+    }
+
+    public static function getActivites() {
+        self::initDatabase();
+        try {
+            $pdo = self::$db;
+            $sql = "SELECT * FROM emploidutemp ORDER BY heure_debut";
+            $query = $pdo->prepare($sql);
+            $query->execute();
+            return $query->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            throw new Exception("Erreur lors de la récupération des activités de l'emploi du temps : " . $e->getMessage());
+        }
+    }
 }
 
