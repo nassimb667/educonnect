@@ -17,10 +17,10 @@ class Timetable
 
     public static function EmploiDuTemps($group)
     {
-        self::initDatabase(); 
+        self::initDatabase();
 
         try {
-            
+
             $stmt = self::$db->prepare("SELECT * FROM emploidutemp WHERE groupe = :groupe");
             $stmt->bindParam(":groupe", $group);
             $stmt->execute();
@@ -37,24 +37,26 @@ class Timetable
     }
 
 
-    public static function ajouterActivite($heure_debut, $heure_fin, $nom_activite) {
+    public static function ajouterActivite($heure_debut, $heure_fin, $nom_activite, $groupe, $jour_semaine)
+    {
         self::initDatabase();
         try {
             $pdo = self::$db;
-            $sql = "INSERT INTO emploidutemp (heure_debut, heure_fin, matiere) VALUES (?, ?, ?)";
+            $sql = "INSERT INTO emploidutemp (heure_debut, heure_fin, matiere,groupe,jour_semaine) VALUES (?, ?, ?, ?, ?)";
             $query = $pdo->prepare($sql);
-            $query->execute([$heure_debut, $heure_fin, $nom_activite]);
+            $query->execute([$heure_debut, $heure_fin, $nom_activite, $groupe, $jour_semaine]);
             return true;
         } catch (PDOException $e) {
             throw new Exception("Erreur lors de l'ajout d'une activité à l'emploi du temps : " . $e->getMessage());
         }
     }
 
-    public static function getActivites() {
+    public static function getActivites()
+    {
         self::initDatabase();
         try {
             $pdo = self::$db;
-            $sql = "SELECT * FROM emploidutemp ORDER BY heure_debut";
+            $sql = "SELECT *, HOUR(`heure_debut`) as startHour, MINUTE(heure_debut) as startMin, HOUR(`heure_fin`)as endHour, MINUTE (`heure_fin`) as endMin FROM emploidutemp ORDER BY heure_debut";
             $query = $pdo->prepare($sql);
             $query->execute();
             return $query->fetchAll(PDO::FETCH_ASSOC);

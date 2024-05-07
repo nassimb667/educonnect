@@ -16,14 +16,15 @@
 
         <!-- Affichage des messages -->
         <div class="flex flex-col gap-4">
-            <?php if (empty($messages)): ?>
+            <?php
+            if (empty($messages)): ?>
                 <p class="text-gray-600">Aucun message à afficher pour le moment.</p>
             <?php else: ?>
                 <?php foreach ($messages as $message): ?>
                     <div class="<?= ($message['idExpediteur'] === $userId) ? 'text-right' : 'text-left' ?>">
                         <div
                             class="<?= ($message['idExpediteur'] === $userId) ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-700' ?> p-4 rounded-lg max-w-xs">
-                            <?php echo $nom; ?>         <?php echo $prenom; ?>
+                            <?php echo $message['nom']; ?>         <?php echo $message['prenom']; ?>
                             <p><?= $message['contenu'] ?></p>
                             <p class="text-xs text-gray-300"><?= $message['dateEnvoi'] ?></p>
                         </div>
@@ -32,7 +33,7 @@
             <?php endif; ?>
         </div>
 
-        <!-- Formulaire d'envoi de messages -->
+
         <div class="mt-8 flex">
             <textarea id="message" name="message" class="flex-grow p-2 rounded-lg border border-gray-300 mr-2"
                 placeholder="Votre message"></textarea>
@@ -47,7 +48,7 @@
         const sendMessageBtn = document.getElementById('sendMessageBtn');
         const messageInput = document.getElementById('message');
 
-       
+
         sendMessageBtn.addEventListener('click', () => {
             // Récupérer le contenu du message
             const messageContent = messageInput.value;

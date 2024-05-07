@@ -24,13 +24,15 @@
                 <div class="bg-gray-200 p-4 rounded-md">
                     <h2 class="text-lg font-semibold mb-2"><?php echo $event['titre']; ?></h2>
                     <p class="text-sm text-gray-600"><?php echo $event['description']; ?></p>
-                    <p class="text-sm text-gray-500">Date de début : <?php echo $event['dateDebut_fr']; ?></p>
-                    <p class="text-sm text-gray-500">Date de fin : <?php echo $event['dateFin_fr']; ?></p>
+                    <p class="text-sm text-gray-500">Date de début : <?= $event['dateFormattedDebut'] ?></p>
+                    <p class="text-sm text-gray-500">Date de fin : <?= $event['dateFormattedFin'] ?></p>
+
                     <!-- Ajouter l'image ici -->
                     <img src="../../assets/img/<?php echo $event['image']; ?>" alt="Image de l'événement"
                         class="w-full max-w-xs h-auto mt-2 rounded-md">
                     <!-- Lien "Lire plus" -->
-                    <a href="../../controllers/controller_event2.php?id=<?php echo $event['idEvenement']; ?>" class="text-blue-500 block mt-2">Lire plus</a>
+                    <a href="../../controllers/controller_event2.php?id=<?php echo $event['idEvenement']; ?>"
+                        class="text-blue-500 block mt-2">Lire plus</a>
 
                 </div>
             <?php endforeach; ?>
