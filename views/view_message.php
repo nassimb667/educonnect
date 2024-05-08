@@ -31,6 +31,20 @@
                                     <button type="submit" class="text-xs text-gray-500 hover:text-red-500 mt-2">Supprimer</button>
                                 </form>
                             <?php endif; ?>
+
+                            <!-- Affichage des réponses -->
+                            <?php $responses = Message::getResponse($message['idMessage']); ?>
+                            <?php if (!empty($responses)): ?>
+                                <div class="mt-4">
+                                    <h2 class="text-sm font-bold mb-2">Réponses :</h2>
+                                    <?php foreach ($responses as $response): ?>
+                                        <div class="bg-gray-100 p-2 mb-2 rounded-lg">
+                                            <p class="text-black"><?= $response['reponse'] ?></p>
+                                            <p class="text-xs text-gray-300"><?= $response['date_reponse'] ?></p>
+                                        </div>
+                                    <?php endforeach; ?>
+                                </div>
+                            <?php endif; ?>
                         </div>
                     </div>
                 <?php endforeach; ?>
