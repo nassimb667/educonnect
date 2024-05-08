@@ -1,5 +1,4 @@
 <?php
-
 require_once "../config.php";
 require_once "../models/message.php";
 
@@ -9,13 +8,39 @@ if (!isset($_SESSION['user'])) {
     exit();
 }
 
-
-$nom = $_SESSION['user']['nom'];
-$prenom = $_SESSION['user']['prenom'];
 $user_id = $_SESSION['user']['idUtilisateur'];
 
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['delete'])) {
+    $messageId = $_POST['delete'];
+    try {
+        Message::deleteMessage($user_id, $messageId);
+        header("Location: controller_educ_message.php");
+        exit();
+    } catch (Exception $e) {
+        echo "Erreur : " . $e->getMessage();
+    }
+}
 
-$messages = Message::getAllMessage();
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submit'])) {
+    $messageId = $_POST['messageId']; 
+    $messageContent = $_POST['message']; 
+    try {
+        Message::ResponseMessage($messageId, $user_id, $messageContent); // Appel de la méthode ResponseMessage avec les bonnes données
+        header("Location: controller_educ_message.php");
+        exit();
+    } catch (Exception $e) {
+        echo "Erreur : " . $e->getMessage();
+    }
+}
 
+$messages = Message::getAllMessage(); // Récupération des messages
+
+// Obtenez les réponses associées à chaque message
+foreach ($messages as $index => $message) {
+    $responses = Message::getResponse($message['idMessage']);
+    // Ajouter les réponses au tableau de messages
+    $messages[$index]['responses'] = $responses;
+}
 
 include "../views/view_educ_message.php";
+?>

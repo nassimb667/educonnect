@@ -83,7 +83,44 @@ class Message
         }
     }
     
+    public static function ResponseMessage($messageId, $destinataireId, $messageContent)
+    {
+        self::initDatabase();
+        try {
+            $pdo = self::$db;
+            $sql = "INSERT INTO response (idMessage, idUtilisateur, date_reponse, reponse) 
+                    VALUES (:message, :destinataire, NOW(), :contenu)";
+            $query = $pdo->prepare($sql);
+            $query->execute([
+                ':message' => $messageId,
+                ':destinataire' => $destinataireId,
+                ':contenu' => $messageContent,
+            ]);
+    
+            return "Réponse envoyée.";
+        } catch (PDOException $e) {
+            throw new Exception("Erreur lors de l'envoi de la réponse : " . $e->getMessage());
+        }
+    }
 
+    public static function getResponse($messageId)
+{
+    self::initDatabase();
+    try {
+        $pdo = self::$db;
+        $sql = "SELECT * FROM response WHERE idMessage = :messageId";
+        $query = $pdo->prepare($sql);
+        $query->execute([':messageId' => $messageId]);
+        $responses = $query->fetchAll(PDO::FETCH_ASSOC);
+        return $responses;
+    } catch (PDOException $e) {
+        throw new Exception("Erreur lors de la récupération des réponses : " . $e->getMessage());
+    }
+}
+
+
+    
+    
 
 
 
