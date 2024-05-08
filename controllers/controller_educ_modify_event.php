@@ -1,6 +1,7 @@
 <?php
 require_once "../config.php";
 require_once "../models/event.php";
+
 session_start();
 
 // Vérification de l'authentification de l'utilisateur
@@ -16,14 +17,15 @@ $currentEvents = Event::getCurrentEvents();
 $upcomingEvents = Event::getUpcomingEvents();
 $pastEvents = Event::getPastEvents();
 
-if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submit'])) {
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['update'])) {
+
     $eventId = $_POST['eventId'];
     $newEventData = [
-        'titre' => $_POST['newTitle'],
-        'description' => $_POST['newDescription'],
-        'dateDebut' => $_POST['newStartDate'],
-        'dateFin' => $_POST['newEndDate'],
-        'image' => $_FILES['newImage']['name']
+        'titre' => htmlspecialchars($_POST['newTitle']),
+        'description' => htmlspecialchars($_POST['newDescription']),
+        'dateDebut' => htmlspecialchars($_POST['newStartDate']),
+        'dateFin' => htmlspecialchars($_POST['newEndDate']),
+        'image' => htmlspecialchars($_FILES['newImage']['name'])
     ];
 
     try {
