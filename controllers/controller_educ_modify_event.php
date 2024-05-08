@@ -16,29 +16,28 @@ $currentEvents = Event::getCurrentEvents();
 $upcomingEvents = Event::getUpcomingEvents();
 $pastEvents = Event::getPastEvents();
 
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submit'])) {
+    $eventId = $_POST['eventId'];
+    $newEventData = [
+        'titre' => $_POST['newTitle'],
+        'description' => $_POST['newDescription'],
+        'dateDebut' => $_POST['newStartDate'],
+        'dateFin' => $_POST['newEndDate'],
+        'image' => $_FILES['newImage']['name']
+    ];
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    if (isset($_POST['submit'])) {
-        
-        $eventId = $_POST['eventId'];
-        $newEventData = [
-            'titre' => $_POST['newTitle'],
-            'description' => $_POST['newDescription'],
-            'dateDebut' => $_POST['newStartDate'],
-            'dateFin' => $_POST['newEndDate'],
-            'image' => $_FILES['newImage']['name']
-        ];
-
-        try {
-            // Appel de la méthode pour modifier l'événement
-            Event::modifyEvent($eventId, $user_id, $newEventData);
-            // Redirection après la modification
-            header("Location: controller_educ_event.php");
+    try {
+        // Appel de la méthode pour modifier l'événement
+        $success = Event::modifyEvent($eventId, $newEventData);
+        if ($success) {
+            header("Location: controller_educ_modify_event.php");
             exit();
-        } catch (Exception $e) {
-            // Gestion des erreurs
-            echo "Erreur : " . $e->getMessage();
+        } else {
+            echo "Une erreur s'est produite lors de la modification de l'événement.";
         }
+    } catch (Exception $e) {
+        // Gestion des erreurs
+        echo "Erreur : " . $e->getMessage();
     }
 }
 

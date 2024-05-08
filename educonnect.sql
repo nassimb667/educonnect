@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : localhost:3306
--- Généré le : mar. 30 avr. 2024 à 13:26
+-- Généré le : mer. 08 mai 2024 à 16:10
 -- Version du serveur : 8.0.30
 -- Version de PHP : 8.3.3
 
@@ -34,7 +34,7 @@ CREATE TABLE `emploidutemp` (
   `heure_debut` time NOT NULL,
   `heure_fin` time NOT NULL,
   `matiere` varchar(100) NOT NULL,
-  `salle` varchar(50) NOT NULL
+  `salle` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT 'Salle commune'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
@@ -52,11 +52,9 @@ INSERT INTO `emploidutemp` (`id`, `groupe`, `jour_semaine`, `heure_debut`, `heur
 (23, '2', 'Mercredi', '10:30:00', '12:30:00', 'Cours de musique', 'Salle de musique'),
 (24, '2', 'Jeudi', '13:30:00', '15:30:00', 'Jeux de société', 'Salle de jeux'),
 (25, '2', 'Vendredi', '14:30:00', '16:30:00', 'Sortie à la bibliothèque', 'Bibliothèque municipale'),
-(26, '3', 'Lundi', '08:45:00', '10:45:00', 'Séance de yoga', 'Salle de relaxation'),
-(27, '3', 'Mardi', '09:45:00', '11:45:00', 'Atelier artistique', 'Atelier créatif'),
-(28, '3', 'Mercredi', '10:45:00', '12:45:00', 'Projection de film', 'Salle de cinéma'),
-(29, '3', 'Jeudi', '13:45:00', '15:45:00', 'Promenade dans le parc', 'Parc municipal'),
-(30, '3', 'Vendredi', '14:45:00', '16:45:00', 'Activités de plein air', 'Terrain de jeux');
+(31, '2', 'Lundi', '15:00:00', '16:00:00', 'atelier peinture', 'Salle commune'),
+(32, '3', 'Mercredi', '15:00:00', '16:00:00', 'atelier numerique', 'Salle commune'),
+(33, '3', 'Mercredi', '15:00:00', '16:00:00', 'atelier numerique', 'Salle commune');
 
 -- --------------------------------------------------------
 
@@ -104,10 +102,11 @@ INSERT INTO `evenements` (`idEvenement`, `titre`, `description`, `dateDebut`, `d
 (9, 'Tournoi éducatif de jeux vidéo', 'Promouvoir l\'apprentissage ludique et la compétition saine à travers les jeux vidéo.\nStimuler l\'intérêt des participants pour des domaines tels que les sciences, les mathématiques, l\'histoire et la technologie.\nEncourager la collaboration et la résolution de problèmes à travers des jeux multijoueurs.', '2024-04-23 17:00:00', '2024-04-23 20:00:00', 'image9.jpg'),
 (10, 'Exploration écologique en forêt', 'Randonnée guidée à travers les sentiers forestiers\nObservation de la faune et la flore', '2024-04-24 18:00:00', '2024-04-24 21:00:00', 'image10.jpg'),
 (11, 'kermess', 'kermess de l\'ecole', '2024-04-29 13:00:00', '2024-04-29 17:00:00', ''),
-(15, NULL, 'test 3', '2024-04-26 16:15:00', '2024-04-26 17:15:00', ''),
 (16, 'test 4', 'test 4', '2024-04-26 16:25:00', '2024-04-26 17:25:00', ''),
 (17, 'test 5', 'test de la redirection', '2024-04-26 16:25:00', '2024-04-26 17:25:00', ''),
-(18, 'test 6', 'test de la redirection', '2024-04-26 16:25:00', '2024-04-26 17:25:00', '');
+(18, 'test 6', 'test de la redirection', '2024-04-26 16:25:00', '2024-04-26 17:25:00', ''),
+(19, 'sortie plage', 'sortie plage', '2024-05-06 12:00:00', '2024-05-06 15:00:00', ''),
+(20, 'test 7', 'test bouton de modif', '2024-05-08 14:46:00', '2024-05-08 18:46:00', '');
 
 -- --------------------------------------------------------
 
@@ -131,17 +130,12 @@ INSERT INTO `journaux` (`idJournal`, `date`, `contenu`, `image`, `idUtilisateur`
 (1, '2023-04-10', 'Izaac a joué au parc aujourd\'hui.', 'parc.jpg', 14),
 (2, '2023-04-10', 'Izaac a fait du vélo ce matin.', 'velo.jpg', 14),
 (3, '2023-04-09', 'Izaac a appris à dessiner un arbre.', 'arbre.jpg', 14),
-(4, '2024-04-28', 'RAS', NULL, NULL),
-(5, '2024-04-28', 'RAS', NULL, NULL),
-(6, '2024-04-28', 'RAS', NULL, NULL),
-(7, '2024-04-28', 'A regarder la tele\r\n ', '8f63261d39cb176a3a64011f45bab63e.jpg', NULL),
-(8, '2024-04-28', 'test2', '8f63261d39cb176a3a64011f45bab63e.jpg', NULL),
-(9, '2024-04-28', 'test3', NULL, NULL),
-(10, '2024-04-28', 'test4', '8f63261d39cb176a3a64011f45bab63e.jpg', NULL),
-(11, '2024-04-28', 'test5', '8f63261d39cb176a3a64011f45bab63e.jpg', NULL),
-(12, '2024-04-28', 'test6', '8f63261d39cb176a3a64011f45bab63e.jpg', NULL),
-(13, '2024-04-28', 'test7', '8f63261d39cb176a3a64011f45bab63e.jpg', NULL),
-(14, '2024-04-28', 'test8', '8f63261d39cb176a3a64011f45bab63e.jpg', 14);
+(14, '2024-05-02', 'test8', 'feed.png', 14),
+(15, '2024-05-02', 'A jouer au jeu video (street fighter)', 'sf.png', 14),
+(16, '2024-05-02', 'A jouer aux jeu video (league of legend)', 'gojo.jpg', 14),
+(17, '2024-05-02', 'A jouer au jeu video ', 'life.png', 14),
+(18, '2024-05-02', 'test image', 'tortuegenial.png', 14),
+(19, '2024-05-08', 'a fait de l\'ordinateurs', 'Nerd-Programming-Graphics-76820891-1.png', 14);
 
 -- --------------------------------------------------------
 
@@ -164,7 +158,6 @@ CREATE TABLE `liaisons` (
 CREATE TABLE `messages` (
   `idMessage` int NOT NULL,
   `idExpediteur` int DEFAULT NULL,
-  `idDestinataire` int DEFAULT NULL,
   `contenu` text,
   `dateEnvoi` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
@@ -173,14 +166,40 @@ CREATE TABLE `messages` (
 -- Déchargement des données de la table `messages`
 --
 
-INSERT INTO `messages` (`idMessage`, `idExpediteur`, `idDestinataire`, `contenu`, `dateEnvoi`) VALUES
-(1, 14, 16, 'Bonjour, comment ça va ?', '2024-04-12 09:00:00'),
-(2, 17, 14, 'Salut, ça va bien merci ! Et toi ?', '2024-04-12 09:05:00'),
-(3, 14, 17, 'Ça va aussi, merci !', '2024-04-12 09:10:00'),
-(4, 17, 14, 'Cool ! Qu\'as-tu prévu aujourd\'hui ?', '2024-04-12 09:15:00'),
-(5, 14, 17, 'Rien de spécial, juste du travail.', '2024-04-12 09:20:00'),
-(6, 17, 14, 'Ah d\'accord, bon courage alors !', '2024-04-12 09:25:00'),
-(7, 14, 17, 'Merci ! :)', '2024-04-12 09:30:00');
+INSERT INTO `messages` (`idMessage`, `idExpediteur`, `contenu`, `dateEnvoi`) VALUES
+(11, 14, 'bonjour\r\n', '2024-05-07 13:00:51'),
+(14, 14, '1 message', '2024-05-07 13:46:48'),
+(15, 17, 'test\r\n', '2024-05-07 14:24:47'),
+(16, 14, 'voyez vous mes messages?', '2024-05-07 14:51:54'),
+(17, 29, 'bonjour', '2024-05-07 14:52:51'),
+(18, 14, 'test\r\n', '2024-05-07 15:34:42'),
+(19, 14, 'retest', '2024-05-07 15:38:43'),
+(20, 14, 'oui?', '2024-05-07 16:05:11'),
+(21, 14, 'non', '2024-05-07 16:05:55'),
+(22, 14, 'ah ouais ?', '2024-05-07 16:13:16');
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `response`
+--
+
+CREATE TABLE `response` (
+  `id` int NOT NULL,
+  `idMessage` int DEFAULT NULL,
+  `idUtilisateur` int DEFAULT NULL,
+  `date_reponse` datetime DEFAULT NULL,
+  `reponse` text
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Déchargement des données de la table `response`
+--
+
+INSERT INTO `response` (`id`, `idMessage`, `idUtilisateur`, `date_reponse`, `reponse`) VALUES
+(1, 22, 17, '2024-05-08 13:23:27', 'test'),
+(2, 22, 17, '2024-05-08 13:23:31', 'oui'),
+(3, 22, 17, '2024-05-08 13:28:14', 'ca marche ?');
 
 -- --------------------------------------------------------
 
@@ -231,7 +250,11 @@ INSERT INTO `utilisateurs` (`idUtilisateur`, `nom`, `prenom`, `email`, `motDePas
 (14, 'Berkaniii', 'Nassim', 'nassim@gmail.com', '$2y$10$TMveXGjDRM1nN8.D8e3q2uGZ07w4yI7J/nlmPEJxtcowERIixoK/K', 1, 683397714, 2, 'Berkani', 'isaac', '../assets/img/enfantphoto_enfant_66197383ce8ab_my-hello-kitty-madara-edits-3-v0-joep6hxtttvb1.png', '2024-04-12', '1'),
 (15, 'Eikichi', 'Onizuka', 'test@test.fr', '$2y$10$5LzJcbxsO3b5ixCKnx/Vk.oZLkt8fuHZAorOBYuy9EP5XVbFoNYmK', 1, 783397715, 2, 'Eikichi', 'Onizuka', '../assets/img/enfantphoto_enfant_661d325cc0ba1_d3c0aqd-965b1603-934c-4427-9417-e6d52f4db987.png', '2024-04-15', '2'),
 (16, 'Doe', 'Jhon', 'jhon@gmail.fr', '$2y$10$TRkDf/8GuFiMj2/qiEVR8.N3rUmsLiYyee5oVJBbZq6c4vcMANCeq', 1, 784397714, 2, 'Doe', 'scarlet', '../assets/img/enfantphoto_enfant_661d347f110f6_Cg_tr_reina_t8.webp', '2024-04-15', '3'),
-(17, 'Test', 'test', 'test@mail.fr', '$2y$10$uKr.aa/66nzWSwKHdnXDq.0EijD2L4ZfX8sjyFXsEGIlJkLoUAXO.', 1, 783397715, 1, NULL, NULL, NULL, NULL, NULL);
+(17, 'Test', 'test', 'test@mail.fr', '$2y$10$uKr.aa/66nzWSwKHdnXDq.0EijD2L4ZfX8sjyFXsEGIlJkLoUAXO.', 1, 783397715, 1, NULL, NULL, NULL, NULL, NULL),
+(18, 'TestB', 'TestN', 'testn@mail.fr', '$2y$10$F7InF/PkygWrMkOxLSmETu7Wks0Hf4YhxDQwG5a7Xa5LeW.dnWggy', 1, 211121314, 2, 'TestB', 'MiniTest', '../assets/img/enfantphoto_enfant_66323f3973bdc_baka.png', '2000-10-10', '1'),
+(19, 'The', 'Goat', 'goat@mail.fr', '$2y$10$lAifqPrX1CZDT3jp/NJ6AuAQ5zRlNr6jyVyRhtbkWB9Qh0uUvX2Je', 1, 102030405, 1, NULL, NULL, NULL, NULL, NULL),
+(20, 'okencore', 'encore', 'mail@mail.fr', '$2y$10$8c1sd.0flrqdzSwsfelMQOXrJg1XHoBA4B0Sa6h5bdi/CLCC8elNe', 1, 102030406, 1, NULL, NULL, NULL, NULL, NULL),
+(29, 'Berkani', 'Nassim', 'bnassim750@gmail.com', '$2y$10$Zf5HiCHR1/KdPeEQtYXuAuMB.8S/O3g4XGKhfcQAz1EdEW78waB6W', 1, 783397714, 2, 'Berkani', 'Nassim', '../assets/img/enfantphoto_enfant_6632525837e8d_gojo.jpg', '1998-01-01', '3');
 
 --
 -- Index pour les tables déchargées
@@ -277,8 +300,15 @@ ALTER TABLE `liaisons`
 --
 ALTER TABLE `messages`
   ADD PRIMARY KEY (`idMessage`),
-  ADD KEY `idExpediteur` (`idExpediteur`),
-  ADD KEY `idDestinataire` (`idDestinataire`);
+  ADD KEY `idExpediteur` (`idExpediteur`);
+
+--
+-- Index pour la table `response`
+--
+ALTER TABLE `response`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `idMessage` (`idMessage`),
+  ADD KEY `idUtilisateur` (`idUtilisateur`);
 
 --
 -- Index pour la table `type`
@@ -303,7 +333,7 @@ ALTER TABLE `utilisateurs`
 -- AUTO_INCREMENT pour la table `emploidutemp`
 --
 ALTER TABLE `emploidutemp`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
 
 --
 -- AUTO_INCREMENT pour la table `enfants`
@@ -315,13 +345,13 @@ ALTER TABLE `enfants`
 -- AUTO_INCREMENT pour la table `evenements`
 --
 ALTER TABLE `evenements`
-  MODIFY `idEvenement` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `idEvenement` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT pour la table `journaux`
 --
 ALTER TABLE `journaux`
-  MODIFY `idJournal` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `idJournal` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT pour la table `liaisons`
@@ -333,7 +363,13 @@ ALTER TABLE `liaisons`
 -- AUTO_INCREMENT pour la table `messages`
 --
 ALTER TABLE `messages`
-  MODIFY `idMessage` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `idMessage` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+
+--
+-- AUTO_INCREMENT pour la table `response`
+--
+ALTER TABLE `response`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT pour la table `type`
@@ -345,7 +381,7 @@ ALTER TABLE `type`
 -- AUTO_INCREMENT pour la table `utilisateurs`
 --
 ALTER TABLE `utilisateurs`
-  MODIFY `idUtilisateur` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `idUtilisateur` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
 
 --
 -- Contraintes pour les tables déchargées
@@ -380,8 +416,14 @@ ALTER TABLE `liaisons`
 -- Contraintes pour la table `messages`
 --
 ALTER TABLE `messages`
-  ADD CONSTRAINT `messages_ibfk_1` FOREIGN KEY (`idExpediteur`) REFERENCES `utilisateurs` (`idUtilisateur`),
-  ADD CONSTRAINT `messages_ibfk_2` FOREIGN KEY (`idDestinataire`) REFERENCES `utilisateurs` (`idUtilisateur`);
+  ADD CONSTRAINT `messages_ibfk_1` FOREIGN KEY (`idExpediteur`) REFERENCES `utilisateurs` (`idUtilisateur`);
+
+--
+-- Contraintes pour la table `response`
+--
+ALTER TABLE `response`
+  ADD CONSTRAINT `response_ibfk_1` FOREIGN KEY (`idMessage`) REFERENCES `messages` (`idMessage`),
+  ADD CONSTRAINT `response_ibfk_2` FOREIGN KEY (`idUtilisateur`) REFERENCES `utilisateurs` (`idUtilisateur`);
 
 --
 -- Contraintes pour la table `utilisateurs`

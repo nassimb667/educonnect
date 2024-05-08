@@ -45,11 +45,12 @@
 
         <!-- Formulaire de modification d'événement -->
         <div class="flex justify-center items-center mt-8">
-            <form action="controller_educ_modify_event.php" method="POST" id="modifyEventForm" enctype="multipart/form-data"
-                class="w-full md:w-1/2 p-6 bg-white rounded-lg shadow-lg hidden">
+            <form action="controller_educ_modify_event.php" method="POST" id="modifyEventForm"
+                enctype="multipart/form-data" class="w-full md:w-1/2 p-6 bg-white rounded-lg hidden">
                 <input type="hidden" name="eventId" id="eventId">
                 <label for="newTitle" class="block">Nouveau titre :</label>
-                <input type="text" name="newTitle" id="newTitle" class="w-full rounded-lg border border-gray-300 p-2 mb-4">
+                <input type="text" name="newTitle" id="newTitle"
+                    class="w-full rounded-lg border border-gray-300 p-2 mb-4">
                 <label for="newDescription" class="block">Nouvelle description :</label>
                 <textarea name="newDescription" id="newDescription"
                     class="w-full rounded-lg border border-gray-300 p-2 mb-4"></textarea>
@@ -60,8 +61,9 @@
                 <input type="datetime-local" name="newEndDate" id="newEndDate"
                     class="w-full rounded-lg border border-gray-300 p-2 mb-4">
                 <label for="newImage" class="block">Nouvelle image :</label>
-                <input type="file" name="newImage" id="newImage" class="w-full rounded-lg border border-gray-300 p-2 mb-4">
-                <button type="submit"
+                <input type="file" name="newImage" id="newImage"
+                    class="w-full rounded-lg border border-gray-300 p-2 mb-4">
+                <button type="submit" name="submit"
                     class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded w-full">Enregistrer les
                     modifications</button>
             </form>
