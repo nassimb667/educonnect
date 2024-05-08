@@ -28,7 +28,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submit'])) {
     try {
         Timetable::ajouterActivite($heure_debut, $heure_fin, $nom_activite,$groupe,$jour_semaine);
         // Redirection après l'ajout de l'activité
-        header("Location: controller_emploi_du_temps.php");
+        header("Location: controller_educ_emploidutemp.php");
         exit();
     } catch (Exception $e) {
         echo "Erreur : " . $e->getMessage();

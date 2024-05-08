@@ -9,8 +9,11 @@
 </head>
 
 <body class="bg-gray-100">
+    <?php include "header_educ.php"; ?>
     <div class="container mx-auto p-8">
         <h1 class="text-3xl font-bold mb-8">Modifier Journal</h1>
+
+
 
         <!-- Liste des articles du journal -->
         <ul>
@@ -21,15 +24,19 @@
                         <input type="hidden" name="journal_id" value="<?= $journal['idJournal'] ?>">
                         <textarea name="contenu" class="mt-2 w-full"><?= $journal['contenu'] ?></textarea>
                         <input type="file" name="image" class="mt-2">
-                        <button type="submit" name="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-2">Valider les modifications</button>
+                        <?php if (!empty($journal['image'])): ?>
+                            <!-- Afficher l'image existante -->
+                            <input type="hidden" name="current_image" value="<?= $journal['image'] ?>">
+                            <img src="../assets/img/journal/<?= $journal['image'] ?>" alt="Image du journal" class="mt-2 w-64">
+                        <?php endif; ?>
+                        <button type="submit" name="submit"
+                            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-2">Valider les
+                            modifications</button>
                     </form>
-                    <!-- Afficher l'image -->
-                    <?php if (!empty($journal['image'])): ?>
-                        <img src="../assets/img/journal/<?= $journal['image'] ?>" alt="Image du journal" class="mt-2 w-64">
-                    <?php endif; ?>
                 </li>
             <?php endforeach; ?>
         </ul>
+
     </div>
 </body>
 

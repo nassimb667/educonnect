@@ -10,7 +10,21 @@
         <nav class="hidden sm:block">
             <ul class="flex space-x-4">
                 <li><a href="../controllers/controller_educ_home.php" class="text-white hover:text-white-800">Accueil</a></li>
-                <li><a href="../controllers/controller_educ_event.php" class="text-white hover:text-white-800">Événement</a></li>
+                <li>
+                    <div class="relative">
+                        <button id="eventDropdownBtn" class="text-white hover:text-white-800 focus:outline-none">
+                            Événement
+                            <svg class="h-5 w-5 inline-block ml-1 -mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                            </svg>
+                        </button>
+                        <ul id="eventDropdownMenu" class="hidden absolute bg-white shadow-md mt-2 w-32 rounded-md py-1">
+                            <li><a href="../controllers/controller_educ_event.php" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Ajouter événement</a></li>
+                            <li><a href="../controllers/controller_educ_modify_event.php" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Modifier événement</a></li>
+                            <li><a href="../controllers/controller_educ_show_event.php" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Afficher événement</a></li>
+                        </ul>
+                    </div>
+                </li>
                 <li><a href="../controllers/controller_educ_emploidutemp.php" class="text-white hover:text-white-800">Emploi du temps</a></li>
                 <li><a href="../controllers/controller_educ_message.php" class="text-white hover:text-white-800">Messagerie</a></li>
                 <li>
@@ -36,11 +50,19 @@
         </div>
     </div>
 </header>
+
 <script>
     const journalDropdownBtn = document.getElementById('journalDropdownBtn');
     const journalDropdownMenu = document.getElementById('journalDropdownMenu');
 
     journalDropdownBtn.addEventListener('click', () => {
         journalDropdownMenu.classList.toggle('hidden');
+    });
+
+    const eventDropdownBtn = document.getElementById('eventDropdownBtn');
+    const eventDropdownMenu = document.getElementById('eventDropdownMenu');
+
+    eventDropdownBtn.addEventListener('click', () => {
+        eventDropdownMenu.classList.toggle('hidden');
     });
 </script>

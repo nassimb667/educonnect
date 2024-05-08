@@ -12,6 +12,8 @@
     <div class="container mx-auto p-8">
         <h1 class="text-3xl font-bold mb-8">Journal éducatif</h1>
 
+        <?php include "header_educ.php"; ?>
+
         <!-- Formulaire pour ajouter une entrée au journal -->
         <div class="mb-8">
             <h2 class="text-xl font-bold mb-4">Ajouter une entrée au journal</h2>

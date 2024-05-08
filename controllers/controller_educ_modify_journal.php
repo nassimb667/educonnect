@@ -11,9 +11,19 @@ if (!isset($_SESSION['user'])) {
 require_once "../config.php";
 require_once "../models/journal.php";
 
+// Récupérez à nouveau tous les articles du journal pour les afficher
+try {
+    $journals = Journal::getalljournal();
+} catch (Exception $e) {
+    echo "Erreur : " . $e->getMessage();
+    exit();
+}
+
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submit'])) {
     $journalId = $_POST['journal_id'];
     $newContenu = $_POST['contenu'];
+    $newImageName = null; // Initialiser à null
+
     // Vérifiez si une nouvelle image a été soumise
     if (!empty($_FILES['image']['name'])) {
         $newImageName = $_FILES['image']['name'];
@@ -31,12 +41,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submit'])) {
         } else {
             echo "Une erreur s'est produite lors du téléchargement du fichier.";
         }
+    } else {
+        // Utiliser l'image existante si aucune nouvelle image n'est soumise
+        $newImageName = $_POST['current_image'];
     }
+
     // Définir la date actuelle
     $newDate = date('Y-m-d H:i:s'); // Date actuelle au format SQL DATETIME
+
     // Mettez à jour l'article dans la base de données
     try {
-        Journal::modifyJournalWithImage($journalId, $newDate, $newContenu, $newImageName); 
+        Journal::modifyJournalWithImage($journalId, $newDate, $newContenu, $newImageName);
         // Redirigez l'utilisateur vers la même page après la mise à jour
         header("Location: controller_educ_modify_journal.php");
         exit();
@@ -45,11 +60,5 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submit'])) {
     }
 }
 
-// Récupérez à nouveau tous les articles du journal pour les afficher
-try {
-    $journals = Journal::getalljournal();
-} catch (Exception $e) {
-    echo "Erreur : " . $e->getMessage();
-    exit();
-}
 include "../views/view_modify_journal.php";
+?>
