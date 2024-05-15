@@ -9,7 +9,7 @@
 </head>
 <body class="bg-gray-100 h-screen flex items-center justify-center">
     <div class="max-w-md w-full bg-white p-8 rounded shadow-md">
-        <h2 class="text-2xl font-bold mb-8 text-center">Se connecter à Educonnect</h2>
+        <h2 class="text-2xl font-bold mb-8 text-center">Se connecter sur J.E.F</h2>
         <form method="POST">
             <div class="mb-4">
                 <label for="email" class="block text-gray-700 text-sm font-bold mb-2">Email</label>

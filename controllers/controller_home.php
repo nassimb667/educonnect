@@ -56,5 +56,4 @@ foreach ($latestEvents as &$event) {
     $event['dateFormattedFin'] = $dateFormattedFin;
 }
 
-
 include("../views/view_home.php");

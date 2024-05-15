@@ -32,6 +32,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submit'])) {
         echo "Erreur : " . $e->getMessage();
     }
 }
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['response'])) {
+    
+    $messageId=$_POST['messageId'];
+    $messageContent=$_POST['message'];
+
+    try {
+        Message::ResponseMessage($messageId, $user_id, $messageContent);
+        header("Location: controller_message.php");
+        exit();
+    } catch (Exception $e) {
+        echo "Erreur : " . $e->getMessage();
+    }
+}
 
 $messages = Message::getMessages($user_id);
 

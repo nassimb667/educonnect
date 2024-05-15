@@ -29,7 +29,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['update'])) {
     ];
 
     try {
-        // Appel de la méthode pour modifier l'événement
+        
         $success = Event::modifyEvent($eventId, $newEventData);
         if ($success) {
             header("Location: controller_educ_modify_event.php");
@@ -38,11 +38,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['update'])) {
             echo "Une erreur s'est produite lors de la modification de l'événement.";
         }
     } catch (Exception $e) {
-        // Gestion des erreurs
+        
         echo "Erreur : " . $e->getMessage();
     }
 }
 
-// Inclusion de la vue
+
 include "../views/view_educ_modify_event.php";
-?>
+

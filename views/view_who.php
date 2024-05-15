@@ -8,7 +8,7 @@
 </head>
 <body class="bg-gray-100">
     <div class="container mx-auto p-8">
-        <h1 class="text-3xl font-bold mb-8">Bienvenue sur notre plateforme</h1>
+        <h1 class="text-3xl font-bold mb-8">Bienvenue sur J.E.F</h1>
         <p class="text-lg mb-4">Veuillez choisir la version de la plateforme à laquelle vous souhaitez accéder :</p>
 
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">

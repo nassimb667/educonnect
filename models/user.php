@@ -16,7 +16,7 @@ class User
     self::initDatabase();
     
     try {
-        // Commencer une transaction
+        // Connexion a la bdd
         self::$db->beginTransaction();
 
         // Insérer l'utilisateur principal et l'enfant dans une seule requête

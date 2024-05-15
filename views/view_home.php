@@ -27,7 +27,7 @@
                     <p class="text-sm text-gray-500">Date de début : <?= $event['dateFormattedDebut'] ?></p>
                     <p class="text-sm text-gray-500">Date de fin : <?= $event['dateFormattedFin'] ?></p>
 
-                    <!-- Ajouter l'image ici -->
+                    <!-- l'image -->
                     <img src="../../assets/img/<?php echo $event['image']; ?>" alt="Image de l'événement"
                         class="w-full max-w-xs h-auto mt-2 rounded-md">
                     <!-- Lien "Lire plus" -->

@@ -40,7 +40,7 @@
         </div>
 
         <!-- Formulaire de modification d'événement -->
-        <!-- le formulaire sera dynamiquement affiché lorsqu'un événement actuel sera sélectionné pour modification. -->
+        
         <div class="flex justify-center items-center mt-8">
             <form action="controller_educ_modify_event.php" method="POST" id="modifyEventForm" enctype="multipart/form-data" class="w-full md:w-1/2 p-6 bg-white rounded-lg hidden">
                 <input type="hidden" name="eventId" id="eventId">

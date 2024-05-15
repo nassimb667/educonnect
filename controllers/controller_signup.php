@@ -25,7 +25,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $errors[] = "Le champ du mot de passe ne peut pas être vide.";
     }
 
-    // Récupérer les données de l'enfant uniquement si le rôle est "famille"
+    
     // Récupérer la photo de l'enfant uniquement si le rôle est "famille"
     if ($type_id == 2) {
         $nomEnfant = isset($_POST["nom_enfant"]) ? trim($_POST["nom_enfant"]) : null;
